@@ -49,51 +49,10 @@
             font-size: 1.1em;
         }
 
-        /* تنسيق قائمة العقارات */
+        /* قائمة العقارات */
         .property-list {
             width: 100%;
             max-width: 1200px;
-        }
-
-        .property-item {
-            background: rgba(255, 255, 255, 0.1);
-            margin-bottom: 20px;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
-        }
-
-        .property-item img {
-            width: 100%;
-            max-width: 400px;
-            height: auto;
-            border-radius: 10px;
-            margin-bottom: 10px;
-        }
-
-        .property-item h2 {
-            margin: 10px 0;
-            font-size: 1.8em;
-        }
-
-        .property-item p {
-            margin: 5px 0;
-            font-size: 1.2em;
-        }
-
-        .contact-button {
-            padding: 10px 20px;
-            font-size: 1.2em;
-            background-color: #007bff;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background 0.3s;
-        }
-
-        .contact-button:hover {
-            background-color: #0056b3;
         }
 
         /* إخفاء الحقول بشكل افتراضي */
@@ -116,35 +75,27 @@
         </select>
     </div>
 
-    <!-- قائمة العقارات (مخفية حالياً) -->
-    <div class="property-list" id="property-list">
-        <!-- سيتم إضافة العقارات هنا في المستقبل بناءً على اختيار المستخدم -->
+    <!-- قائمة العقارات -->
+    <div class="property-list">
+        <!-- يمكنك إضافة العقارات هنا لاحقًا -->
     </div>
 
     <script>
-        // إظهار العقارات بناءً على اختيار المحافظة (مستقبلاً يمكن ربط هذه الدالة مع قاعدة بيانات)
+        // دالة لإظهار العقارات بناءً على اختيار المحافظة
         function showProperties() {
             var selectedGovernorate = document.getElementById('property-governorate').value;
-            var propertyList = document.getElementById('property-list');
+            var properties = document.querySelectorAll('.property-item');
 
-            // إعادة تعيين المحتوى
-            propertyList.innerHTML = '';
-
-            // عرض العقارات بناءً على الاختيار (يمكن تعديل هذه الدالة لجلب البيانات من قاعدة بيانات مستقبلاً)
-            if (selectedGovernorate) {
-                // مثال: يمكنك إضافة عناصر عقارات بناءً على الاختيار
-                var propertyItem = document.createElement('div');
-                propertyItem.classList.add('property-item');
-                propertyItem.innerHTML = `
-                    <h2>عنوان العقار: عقار في ${selectedGovernorate}</h2>
-                    <p>تفاصيل العقار...</p>
-                    <button class="contact-button">اتصل بالبائع</button>
-                `;
-                propertyList.appendChild(propertyItem);
-            }
+            properties.forEach(function(property) {
+                if (property.getAttribute('data-governorate') === selectedGovernorate) {
+                    property.classList.remove('hidden');
+                } else {
+                    property.classList.add('hidden');
+                }
+            });
         }
 
-        // دالة للاتصال بالبائع (هذه مجرد مثال)
+        // دالة للاتصال بالبائع (يمكنك تعديلها لاحقًا)
         function contactSeller() {
             alert('سيتم الاتصال بالبائع.');
         }
