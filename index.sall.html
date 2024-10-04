@@ -51,15 +51,6 @@
             font-size: 1.1em;
         }
 
-        .form-group textarea {
-            height: 150px;
-            resize: none;
-        }
-
-        input[type="file"] {
-            padding: 10px;
-        }
-
         button {
             width: 100%;
             max-width: 800px;
@@ -87,16 +78,15 @@
 
     <h1>بيع عقارك</h1>
 
-    <form>
-        <!-- الحقول الأساسية -->
+    <form method="POST" action="/sell" onsubmit="showSuccessMessage()">
         <div class="form-group">
             <label for="property-title">عنوان الشقة:</label>
-            <input type="text" id="property-title" name="property-title" placeholder="أدخل عنوان الشقة">
+            <input type="text" id="property-title" name="property-title" placeholder="أدخل عنوان الشقة" required>
         </div>
 
         <div class="form-group">
             <label for="property-description">تفاصيل الشقة:</label>
-            <textarea id="property-description" name="property-description" placeholder="أدخل تفاصيل الشقة"></textarea>
+            <textarea id="property-description" name="property-description" placeholder="أدخل تفاصيل الشقة" required></textarea>
         </div>
 
         <div class="form-group">
@@ -104,33 +94,29 @@
             <input type="url" id="property-location" name="property-location" placeholder="أدخل رابط لوكيشن الشقة من خرائط جوجل">
         </div>
 
-        <!-- اختيار المحافظة -->
         <div class="form-group">
             <label for="property-governorate">المحافظة:</label>
-            <select id="property-governorate" name="property-governorate">
+            <select id="property-governorate" name="property-governorate" required>
                 <option value="">اختر المحافظة</option>
                 <option value="cairo">القاهرة</option>
                 <option value="giza">الجيزة</option>
             </select>
         </div>
 
-        <!-- حقل اختيار طريقة الدفع -->
         <div class="form-group">
             <label for="payment-method">طريقة الدفع:</label>
-            <select id="payment-method" name="payment-method" onchange="togglePaymentFields()">
+            <select id="payment-method" name="payment-method" onchange="togglePaymentFields()" required>
                 <option value="">اختر</option>
                 <option value="cash">كاش</option>
                 <option value="installments">تقسيط</option>
             </select>
         </div>
 
-        <!-- حقل السعر للكاش -->
         <div class="form-group hidden" id="cash-price-field">
             <label for="property-price">السعر (بالجنيه):</label>
             <input type="number" id="property-price" name="property-price" placeholder="أدخل السعر">
         </div>
 
-        <!-- الحقول للتقسيط -->
         <div class="form-group hidden" id="installments-fields">
             <label for="down-payment">المبلغ المقدم (بالجنيه):</label>
             <input type="number" id="down-payment" name="down-payment" placeholder="أدخل المبلغ المقدم">
@@ -150,7 +136,6 @@
             <input type="number" id="monthly-installment" name="monthly-installment" placeholder="سيتم حسابه تلقائيًا" readonly>
         </div>
 
-        <!-- رفع الصور -->
         <div class="form-group">
             <label for="property-images">صور العقار:</label>
             <input type="file" id="property-images" name="property-images" accept="image/*" multiple>
@@ -160,7 +145,6 @@
     </form>
 
     <script>
-        // إظهار أو إخفاء الحقول بناءً على طريقة الدفع
         function togglePaymentFields() {
             var paymentMethod = document.getElementById('payment-method').value;
             var cashField = document.getElementById('cash-price-field');
@@ -178,16 +162,20 @@
             }
         }
 
-        // حساب مبلغ القسط الشهري
         function calculateInstallment() {
             var downPayment = parseFloat(document.getElementById('down-payment').value) || 0;
-            var totalPrice = 1000000; // مثال على سعر العقار (يمكن تغييره حسب المدخلات)
+            var totalPrice = 1000000; // سعر العقار (يمكن تغييره حسب المدخلات)
             var installmentDuration = parseInt(document.getElementById('installment-duration').value) || 1;
 
             var remainingAmount = totalPrice - downPayment;
             var monthlyInstallment = remainingAmount / (installmentDuration * 12);
 
             document.getElementById('monthly-installment').value = monthlyInstallment.toFixed(2);
+        }
+
+        // عرض إشعار بعد إرسال النموذج
+        function showSuccessMessage() {
+            alert("تم إرسال الإعلان بنجاح! سيتم عرضه قريبًا.");
         }
     </script>
 
