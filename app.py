@@ -1,14 +1,7 @@
-from bottle import app
 from flask import Flask, render_template, request, redirect, url_for
 import sqlite3
-import os
 
-@app.route('/admin')
-def admin_panel():
-    if os.getenv('ADMIN_ACCESS') != 'true':
-        return "Access Denied", 403
-    # ... باقي الكود الخاص بلوحة التحكم
-
+# تعريف التطبيق
 app = Flask(__name__)
 
 # وظيفة للحصول على قائمة الطلبات من قاعدة البيانات
