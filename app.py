@@ -37,10 +37,14 @@ def update_property_status(property_id, status):
 # صفحة لوحة التحكم
 @app.route('/')
 def admin_panel():
+    # الحصول على العقارات المعلقة والمرتبطة بالقاهرة والجيزة
     pending_properties = get_properties(status='معلق')
     cairo_properties = get_properties(location='القاهرة')
     giza_properties = get_properties(location='الجيزة')
-    return render_template('admin.html', pending_properties=pending_properties, cairo_properties=cairo_properties, giza_properties=giza_properties)
+    return render_template('admin.html', 
+                           pending_properties=pending_properties, 
+                           cairo_properties=cairo_properties, 
+                           giza_properties=giza_properties)
 
 # معالجة طلبات الموافقة أو الرفض
 @app.route('/update_status/<int:property_id>/<status>')
